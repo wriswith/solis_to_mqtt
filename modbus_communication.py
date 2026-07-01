@@ -17,7 +17,6 @@ def poll_server():
     for register in REGISTERS_TO_LOG:
         value = instrument.read_register(register)
         print(f"{REGISTERS_TO_LOG[register]}: {value}")
-        print(instrument.read_register(33139, functioncode=4))
         time.sleep(0.1)
 
 
