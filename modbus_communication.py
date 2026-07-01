@@ -1,10 +1,15 @@
 import minimalmodbus
 
-from config import COMM_PORT
+from config import COMM_PORT, COMM_BAUD_RATE, COMM_TIMEOUT, COMM_PARITY, COMM_BYTE_SIZE, COMM_STOP_BITS
 
 
 def poll_server():
     instrument = minimalmodbus.Instrument(COMM_PORT, 1)
+    instrument.serial.baudrate = COMM_BAUD_RATE
+    instrument.serial.bytesize = COMM_BYTE_SIZE
+    instrument.serial.parity = COMM_PARITY
+    instrument.serial.stopbits = COMM_STOP_BITS
+    instrument.serial.timeout = COMM_TIMEOUT
     print(instrument.read_register(33139))
 
 
