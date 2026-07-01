@@ -2,8 +2,8 @@ import json
 
 import paho.mqtt.client as mqtt
 
-from config import MQTT_BROKER_USERNAME, MQTT_BROKER_PASSWORD, MQTT_BROKER_IP, MQTT_BROKER_PORT, MQTT_VALUE_TYPES, \
-    PV_POWER_W
+from config import MQTT_BROKER_USERNAME, MQTT_BROKER_PASSWORD, MQTT_BROKER_IP, MQTT_BROKER_PORT
+from global_variables import MQTT_VALUE_TYPES
 
 _client_1 = None
 
@@ -61,9 +61,3 @@ class MqttValueType:
     def publish_value(self, value):
         client = get_mqtt_client()
         client.publish(self.state_topic, value, retain=True)
-
-
-if __name__ == '__main__':
-    test_type = MqttValueType.create_mqtt_value_type(PV_POWER_W)
-    # test_type.publish_discovery_message()
-    test_type.publish_value(1)
