@@ -24,7 +24,7 @@ REGISTERS_TO_LOG = {
 }
 
 
-_VALUE_TYPES = {
+MQTT_VALUE_TYPES = {
     PV_POWER_W: {"friendly_name": "Current Solar Power",
                  "state_topic": "homeassistant/energy/solar_power/state",
                  "unit_of_measurement": "W",
