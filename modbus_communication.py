@@ -1,4 +1,5 @@
 import time
+import traceback
 
 import minimalmodbus
 
@@ -34,4 +35,10 @@ def poll_server():
 
 
 if __name__ == '__main__':
-    poll_server()
+    while True:
+        try:
+            poll_server()
+        except Exception as e:
+            traceback.print_exc()
+            print(e)
+            time.sleep(60)
