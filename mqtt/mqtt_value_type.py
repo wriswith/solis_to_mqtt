@@ -32,7 +32,8 @@ class MqttValueType:
     @staticmethod
     def create_mqtt_value_type(value_name):
         config = MQTT_VALUE_TYPES[value_name]
-        mqtt_value_type = MqttValueType(value_name, config["friendly_name"], config["state_topic"],
+        mqtt_value_type = MqttValueType(value_name, config["friendly_name"],
+                                        config["state_topic"],
                                         config["unit_of_measurement"],
                                         config["state_class"], config["device_class"])
         if "payload_on" in config:

@@ -34,7 +34,7 @@ MQTT_VALUE_TYPES = {
                       "state_topic": "homeassistant/energy/battery_power/state",
                       "unit_of_measurement": "W",
                       "state_class": "measurement",
-                      "device_class": "battery"},
+                      "device_class": "power"},
     BATTERY_DISCHARGING: {"friendly_name": "Is Battery Discharging",
                           "state_topic": "homeassistant/energy/is_battery_discharging/state",
                           "payload_on": "1",
