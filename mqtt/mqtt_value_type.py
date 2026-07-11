@@ -26,24 +26,31 @@ class MqttValueType:
         self.unit_of_measurement = unit_of_measurement
         self.state_class = state_class
         self.device_class = device_class
+        self.payload_on = None
+        self.payload_off = None
 
     @staticmethod
     def create_mqtt_value_type(value_name):
         config = MQTT_VALUE_TYPES[value_name]
-        return MqttValueType(value_name, config["friendly_name"], config["state_topic"], config["unit_of_measurement"],
-                             config["state_class"], config["device_class"])
+        mqtt_value_type = MqttValueType(value_name, config["friendly_name"], config["state_topic"],
+                                        config["unit_of_measurement"],
+                                        config["state_class"], config["device_class"])
+        if "payload_on" in config:
+            mqtt_value_type.payload_on = config["payload_on"]
+        if "payload_off" in config:
+            mqtt_value_type.payload_off = config["payload_off"]
+        return mqtt_value_type
 
     def get_unique_id(self):
         return self.friendly_name.replace(' ', '_').lower()
 
     def get_config_topic(self):
         return f"homeassistant/sensor/{self.get_unique_id()}/config"
-    
+
     def get_config_payload(self):
-        return {
+        result = {
             "name": self.friendly_name,
             "state_topic": self.state_topic,
-            "unit_of_measurement": self.unit_of_measurement,
             "device_class": self.device_class,
             "state_class": self.state_class,
             "unique_id": self.get_unique_id(),
@@ -53,6 +60,12 @@ class MqttValueType:
                 "model": "python"
             }
         }
+        if self.unit_of_measurement:
+            result["unit_of_measurement"] = self.unit_of_measurement
+        if self.state_class:
+            result["state_class"] = self.state_class
+
+        return result
 
     def publish_discovery_message(self):
         client = get_mqtt_client()
