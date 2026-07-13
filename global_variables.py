@@ -7,6 +7,8 @@ ACTIVE_POWER = "active_power"
 WATTAGE_TO_GRID = "energy_to_grid"
 BATTERY_CHARGING_POWER_W = "battery_charging_power_w"
 BATTERY_DISCHARGING_POWER_W = "battery_discharging_power_w"
+TOTAL_ENERGY_CHARGED_KWH = "battery_charged_energy_total_kwh"
+TOTAL_ENERGY_DISCHARGED_KWH = "battery_discharged_energy_total_kwh"
 
 
 # Modbus registers to log
@@ -21,6 +23,8 @@ REGISTERS_TO_LOG = {
     # "Battery power (W)",   value is enriched by script with charging direction, negative means the battery is charging.
     33079: ACTIVE_POWER,  # "Active power (W)",
     33083: WATTAGE_TO_GRID,  # "Meter total apparent power",  # Meter total apparent power
+    33161: TOTAL_ENERGY_CHARGED_KWH,
+    33165: TOTAL_ENERGY_DISCHARGED_KWH,
 }
 
 
@@ -50,6 +54,16 @@ MQTT_VALUE_TYPES = {
     PV_ENERGY_TOTAL: {"friendly_name": "Solar Energy Total",
                       "state_topic": "homeassistant/energy/solar_energy/state",
                       "unit_of_measurement": "Wh",
+                      "state_class": "total_increasing",
+                      "device_class": "energy"},
+    TOTAL_ENERGY_CHARGED_KWH: {"friendly_name": "Battery Charged Energy Total",
+                      "state_topic": "homeassistant/energy/battery_energy_charged/state",
+                      "unit_of_measurement": "kWh",
+                      "state_class": "total_increasing",
+                      "device_class": "energy"},
+    TOTAL_ENERGY_DISCHARGED_KWH: {"friendly_name": "Battery Discharged Energy Total",
+                      "state_topic": "homeassistant/energy/battery_energy_discharged/state",
+                      "unit_of_measurement": "kWh",
                       "state_class": "total_increasing",
                       "device_class": "energy"},
 }
