@@ -4,7 +4,7 @@ import traceback
 import minimalmodbus
 
 from config import COMM_PORT, COMM_BAUD_RATE, COMM_TIMEOUT, COMM_PARITY, COMM_BYTE_SIZE, COMM_STOP_BITS
-from global_variables import REGISTERS_TO_LOG, DATATYPE_U16, ADDRESS_DATATYPES, DATATYPE_S32
+from global_variables import REGISTERS_TO_LOG, DATATYPE_U16, ADDRESS_DATATYPES, DATATYPE_S32, DATATYPE_U32
 from mqtt.log_to_mqtt import publish_mqtt_discovery_messages, push_readings_to_mqtt
 
 
@@ -25,6 +25,8 @@ def poll_server():
                 value = instrument.read_register(register, functioncode=4)
             elif ADDRESS_DATATYPES[register] == DATATYPE_S32:
                 value = instrument.read_long(register, functioncode=4, signed=True)
+            elif ADDRESS_DATATYPES[register] == DATATYPE_U32:
+                value = instrument.read_long(register, functioncode=4, signed=False)
             else:
                 raise ValueError()
             readings.append((REGISTERS_TO_LOG[register], value, time.time()))
